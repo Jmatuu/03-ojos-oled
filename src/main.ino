@@ -17,6 +17,7 @@
 #include <Adafruit_SSD1306.h>
 
 #include "logboot.h"
+#include "logo.h"
 #include "eyes.h"
 
 // Instancia global del display OLED SSD1306 (128x64)
@@ -198,15 +199,15 @@ void setup() {
   Serial.begin(115200);
   while (!Serial && millis() < 1000);
 
-  // Inicializar periféricos y pantalla
+  //Implementacion del logo 
   if (!initDiagnostics(display)) {
     Serial.println(F("[FALLO CRÍTICO] Error al inicializar pantalla OLED."));
     while (true) delay(100);
   }
+   // 2. LOGBOOT (POST)
+  showBootLogo(display);
+  runSystemPOST(display);
 
-  // TODO 1.1: Invoca la función obligatoria de auto-diagnóstico (Power-On Self-Test):
-  // runSystemPOST(display);
-     runSystemPOST(display);
 
   // Menú de ayuda por Serial Monitor
   Serial.println(F("\n======================================================="));
